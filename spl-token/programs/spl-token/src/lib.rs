@@ -1,12 +1,12 @@
 use anchor_lang::prelude::*;
-use anchor_spl::{associated_token::AssociatedToken, token::Token};
+use anchor_spl::{associated_token::AssociatedToken, token::{Token, TokenAccount, Mint}};
 
 declare_id!("78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ");
 
 #[program]
 pub mod spl_token {
     use anchor_lang::system_program;
-    use anchor_spl::{token::{initialize_mint, InitializeMint, mint_to, MintTo}, associated_token};
+    use anchor_spl::{token::{initialize_mint, InitializeMint, mint_to, MintTo, transfer, Transfer}, associated_token};
 
     use super::*;
 
@@ -70,6 +70,29 @@ pub mod spl_token {
 
         Ok(())
     }
+
+    // In the transfer_token function you can see it is used to send tokens supply to 
+    // token account address. The struct TransferToken is passed into the function 
+    // with mint address, sender token address and receiver token address. The 
+    // transfer function of token program is enough to send tokens from one token 
+    // account to another with in same mint address.
+    
+    pub fn transer_token(ctx: Context<TransferToken>,amount:u64) -> Result<()> {
+
+        msg!("Started {:} tokens transfer from account {:} to {:}",amount,ctx.accounts.from_account.key(),ctx.accounts.to_account.key());
+  
+        transfer(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(), 
+                Transfer{authority:ctx.accounts.signer.to_account_info(),from:ctx.accounts.from_account.to_account_info(),to:ctx.accounts.to_account.to_account_info()}
+            ), 
+            amount
+        )?;
+  
+
+        Ok(())
+    }
+  
 }
 
 #[derive(Debug, AnchorDeserialize, AnchorSerialize)]
@@ -88,4 +111,18 @@ pub struct CreateToken<'info> {
     pub token_program:Program<'info,Token>,
     pub associate_token_program:Program<'info,AssociatedToken>,
     pub rent:Sysvar<'info,Rent>
+}
+#[derive(Accounts)]
+pub struct TransferToken<'info>{    
+    #[account(mut)]
+    pub mint_token:Account<'info,Mint>,
+    #[account(mut)]
+    pub from_account:Account<'info,TokenAccount>,
+    #[account(mut)]
+    pub to_account:Account<'info,TokenAccount>,
+    #[account(mut)]
+    pub signer:Signer<'info>,
+    pub system_program:Program<'info,System>,
+    pub token_program:Program<'info,Token>,
+    pub associate_token_program:Program<'info,AssociatedToken>,
 }
