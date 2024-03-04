@@ -25,24 +25,22 @@ describe("spl-token", () => {
   )[0]
 
 
-  it("Testing Create token...", async () => {
+  it.only("Testing Create token...", async () => {
 
     console.log(mintToken.publicKey.toBase58())
     console.log(tokenAccount.toBase58())
+    const tx = await program.methods.createToken(9, new anchor.BN(10 ** 9 * 100))
+      .accounts({
+        mintToken: mintToken.publicKey,
+        tokenAccount: tokenAccount,
+        associateTokenProgram,
+      })
+      .signers([mintToken])
+      .rpc();
 
-    try {
-      const tx = await program.methods.createToken(9,new anchor.BN(10**9*100))
-        .accounts({
-          mintToken:mintToken.publicKey,
-          tokenAccount:tokenAccount,
-          associateTokenProgram,
-        })
-        .signers([mintToken])
-        .rpc();
-        console.log("Your transaction signature", tx);
-    } catch (error) {
-        console.log(error)
-    }
+    assert(tx !== undefined, "error: transaction failed")
+    expect((await provider.connection.getTokenAccountBalance(tokenAccount)).value.amount).to.be.equal("100000000000")
+    console.log("Your transaction signature", tx);
   });
 
   it("Testing token transfer...", async () =>{

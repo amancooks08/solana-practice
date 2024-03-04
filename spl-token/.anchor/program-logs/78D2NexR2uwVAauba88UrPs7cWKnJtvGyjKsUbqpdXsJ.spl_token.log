@@ -1,6 +1,6 @@
 Streaming transaction logs mentioning 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ. Confirmed commitment
-Transaction executed in slot 3:
-  Signature: 35He3LM8gToqFZBSD12FBw8f8NmJfMAciVBacQritDQxMpANdDBsmc839LGrq9j2cu3LjMeL1sxVG9TjFaSAzSPm
+Transaction executed in slot 4:
+  Signature: 2kovcPt9wfXYyEgrb55irfJJoUBd1xpmCRkeuXZ5gKGwgHfD979xQqyL8PYSa1bxjs2XTPiXxAREVMWN6NVDo244
   Status: Ok
   Log Messages:
     Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ invoke [1]
@@ -15,7 +15,7 @@ Transaction executed in slot 3:
     Program log: Create
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]
     Program log: Instruction: GetAccountDataSize
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1622 of 166858 compute units
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1622 of 178858 compute units
     Program return: TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA pQAAAAAAAAA=
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
     Program 11111111111111111111111111111111 invoke [3]
@@ -24,42 +24,17 @@ Transaction executed in slot 3:
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]
     Program log: Instruction: InitializeImmutableOwner
     Program log: Please upgrade to SPL Token 2022 for immutable owner support
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 160218 compute units
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 1405 of 172218 compute units
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [3]
     Program log: Instruction: InitializeAccount3
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4241 of 156336 compute units
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4241 of 168336 compute units
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
-    Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 26443 of 178255 compute units
+    Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL consumed 20443 of 184255 compute units
     Program ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL success
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]
     Program log: Instruction: MintTo
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4538 of 149202 compute units
+    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4538 of 161202 compute units
     Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
-    Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ consumed 55613 of 200000 compute units
-    Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ success
-Transaction executed in slot 6:
-  Signature: 4yUBnKPeN469tYbJVpqCfmymXAChpckQb3dZYwwsa7B387rHSxs5zVQJsPuupyKSAqfmZaWoMgNJggwbrXHiYF3n
-  Status: Ok
-  Log Messages:
-    Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ invoke [1]
-    Program log: Instruction: TranserToken
-    Program log: Started 90000000000 tokens transfer from account 5Z3gMUNreYg4Qm4ue6GGdF3XiLevEhm17RCS9k2M2nAf to E4sseJMUNDJrg5qzb5PM2hwRfiumvVYLnY5CUAnzjBq1
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]
-    Program log: Instruction: Transfer
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4645 of 169191 compute units
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
-    Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ consumed 35832 of 200000 compute units
-    Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ success
-Transaction executed in slot 7:
-  Signature: 4t6CmjUxnGWcsHvriEpMC3nKPmsDXWedJahbhFFK5Ls2qPWnVkkPy6jaTGMDUn3revmbx7c3ZCEvKRjquUgNTzsk
-  Status: Ok
-  Log Messages:
-    Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ invoke [1]
-    Program log: Instruction: BurnToken
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA invoke [2]
-    Program log: Instruction: Burn
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA consumed 4753 of 194480 compute units
-    Program TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA success
-    Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ consumed 10558 of 200000 compute units
+    Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ consumed 43613 of 200000 compute units
     Program 78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ success
