@@ -67,5 +67,19 @@ describe("spl-token", () => {
     
     assert(tx !== undefined, "error: transaction failed")
     console.log("Your transaction signature", tx);
-  })
+  });
+
+  it("Testing burn token...", async () => {
+
+    const tx = await program.methods.burnToken(new anchor.BN(10**9*10))
+      .accounts({
+      mintToken:mintToken.publicKey,
+      tokenAccount,
+    })
+    .signers([])
+    .rpc();
+    assert(tx !== undefined, "error: transaction failed")
+    expect((await provider.connection.getTokenAccountBalance(tokenAccount)).value.amount).to.be.equal("0")
+    console.log("Your transaction signature", tx);
+  });
 });
