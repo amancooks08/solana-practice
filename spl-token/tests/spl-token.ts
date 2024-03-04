@@ -66,6 +66,8 @@ describe("spl-token", () => {
     .rpc()
     
     assert(tx !== undefined, "error: transaction failed")
+    expect((await provider.connection.getTokenAccountBalance(recieverTokenAccountKeypair.publicKey)).value.amount).to.be.equal("90000000000")
+    expect((await provider.connection.getTokenAccountBalance(tokenAccount)).value.amount).to.be.equal("10000000000")
     console.log("Your transaction signature", tx);
   });
 
