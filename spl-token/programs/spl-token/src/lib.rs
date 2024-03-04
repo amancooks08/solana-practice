@@ -6,7 +6,7 @@ declare_id!("78D2NexR2uwVAauba88UrPs7cWKnJtvGyjKsUbqpdXsJ");
 #[program]
 pub mod spl_token {
     use anchor_lang::system_program;
-    use anchor_spl::{token::{initialize_mint, InitializeMint, mint_to, MintTo, transfer, Transfer}, associated_token};
+    use anchor_spl::{token::{initialize_mint, InitializeMint, mint_to, MintTo, transfer, Transfer, burn, Burn}, associated_token};
 
     use super::*;
 
@@ -92,6 +92,22 @@ pub mod spl_token {
 
         Ok(())
     }
+
+    // The function burn_token is used to burn number of tokens in the token account.
+    pub fn burn_token(ctx: Context<BurnToken>,amount:u64)->Result<()>{
+        burn(
+            CpiContext::new(
+                ctx.accounts.token_program.to_account_info(), 
+                Burn{
+                    authority:ctx.accounts.signer.to_account_info(),
+                    from:ctx.accounts.token_account.to_account_info(),
+                    mint:ctx.accounts.mint_token.to_account_info()
+                }
+            ), 
+            amount
+        )?;
+        Ok(())
+    }
   
 }
 
@@ -106,6 +122,7 @@ pub struct CreateToken<'info> {
     #[account(mut)]
     pub signer:Signer<'info>,
     #[account(mut)]
+    /// CHECK:
     pub token_account:AccountInfo<'info>,
     pub system_program:Program<'info,System>,
     pub token_program:Program<'info,Token>,
@@ -125,4 +142,15 @@ pub struct TransferToken<'info>{
     pub system_program:Program<'info,System>,
     pub token_program:Program<'info,Token>,
     pub associate_token_program:Program<'info,AssociatedToken>,
+}
+
+#[derive(Accounts)]
+pub struct BurnToken<'info> {
+    #[account(mut)]
+    pub mint_token:Account<'info,Mint>,
+    #[account(mut)]
+    pub signer:Signer<'info>,
+    #[account(mut)]
+    pub token_account:Account<'info,TokenAccount>,
+    pub token_program:Program<'info,Token>,
 }
