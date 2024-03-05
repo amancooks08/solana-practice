@@ -8,9 +8,8 @@ declare_id!("3KwcL4cGq1yuM8s4Wt5ZfpsH53SfSPtu874CLq8PtU8S");
 pub mod staking_program {
     use super::*;
 
-    /*
-        This function is used to initialize the program, and the pool.
-     */
+    /// This is the initializer for our staking program, you can think of it like 
+    /// a constructor.
     pub fn initialize(ctx: Context<Initialize>, lockup_period: u64) -> Result<()> {
         msg!("Instruction: Initialize");
 
@@ -24,50 +23,47 @@ pub mod staking_program {
     }
 }
 
+/// This struct is used to store the accounts that are passed to the initializer.
 #[derive(Accounts)]
-
-/*
-    This struct is used to store the accounts that are passed to the initialize function.
-    The admin field stores the admin's account.
-    The pool_info field stores the pool's account.
-    The staking_token field stores the staking token's account.
-    The admin_staking_wallet field stores the admin's staking wallet account.
-    The system_program field stores the system program account.
- */
 pub struct Initialize<'info> {
+    /// The admin field stores the admin's account.
     #[account(mut)]
     pub admin: Signer<'info>,
+    /// The pool_info field stores the pool's account.
     #[account(init, payer = admin, space = 8 + PoolInfo::LEN)]
     pub pool_info: Account<'info, PoolInfo>,
+    /// The staking_token field stores the staking token's account.
     #[account(mut)]
     pub staking_token: InterfaceAccount<'info, Mint>,
+    ///The admin_staking_wallet field stores the admin's staking wallet account.
     #[account(mut)]
     pub admin_staking_wallet: InterfaceAccount<'info, TokenAccount>,
+    /// The system_program field stores the system program account.
     pub system_program: Program<'info, System>,
 }
 
 
-/*
-    This struct is used to store the pool's information.
-    The admin field stores the admin's public key.
-    The lockup_period field stores the lockup period of the pool.
-    The token field stores the public key of the staking token.
-*/
+
+/// This struct is used to store the pool's information.
 #[account]
 pub struct PoolInfo {
+    /// The admin field stores the public key of the admin.
     pub admin: Pubkey,
+    /// The lockup_period field stores the lockup period of the pool.
     pub lockup_period: u64,
+    /// The token field stores the public key of the staking token.
     pub token: Pubkey,
 }
-/*
-    This struct is used to store the user's staking information.
-    The amount field stores the amount of staking tokens the user has staked.
-    The reward_claimed field stores the amount of rewards the user has already claimed.
-*/
+
+/// The UserInfo struct stores the user's staking information.
 #[account]
 pub struct UserInfo {
+    /// The amount field stores the amount of staking tokens the user has staked.
     pub amount: u64,
+    /// The reward_claimed field stores the amount of rewards the user has already claimed.
     pub reward_debt: u64,
+    /// The start_time field stores the time the user started staking.
+    pub start_time: u64,
 }
 
 impl UserInfo {
