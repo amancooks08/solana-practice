@@ -63,6 +63,41 @@ pub mod staking_program {
 
         Ok(())
     }
+
+
+    /// This is the unstake instruction, it is used to unstake tokens from the pool.
+    pub fn unstake(ctx: Context<Unstake>) -> Result<()> {
+        msg!("Instruction: Unstake");
+
+        let user_info = &mut ctx.accounts.user_info;
+        let pool_info = &mut ctx.accounts.pool_info;
+        
+        update_reward(user_info, pool_info)?;
+
+        let cpi_accounts = MintTo {
+            mint: ctx.accounts.staking_token.to_account_info(),
+            to: ctx.accounts.user_staking_wallet.to_account_info(),
+            authority: ctx.accounts.admin.to_account_info(),
+        };
+        let cpi_program = ctx.accounts.token_program.to_account_info();
+        let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
+        token::mint_to(cpi_ctx, user_info.reward_debt)?;
+
+        let cpi_accounts = Transfer {
+            from: ctx.accounts.admin_staking_wallet.to_account_info(),
+            to: ctx.accounts.user_staking_wallet.to_account_info(),
+            authority: ctx.accounts.admin.to_account_info(),
+        };
+        let cpi_program = ctx.accounts.token_program.to_account_info();
+        let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
+        token::transfer(cpi_ctx, user_info.amount)?;
+
+        user_info.amount = 0;
+        user_info.start_time = 0;
+        user_info.reward_debt = 0;
+
+        Ok(())
+    }
 }
 
 /// This struct is used to store the accounts that are passed to the initializer.
@@ -145,6 +180,43 @@ pub struct Stake<'info> {
 
     /// The system_program field stores the system program account.
     pub system_program: Program<'info, System>,
+}
+
+/// This is the unstake instruction, it is used to unstake tokens.
+#[derive(Accounts)]
+pub struct Unstake<'info> {
+    /// The user field stores the user's account.
+    /// CHECK:
+    #[account(mut)]
+    pub user: AccountInfo<'info>,
+
+    /// The admin field stores the admin's account.
+    /// CHECK:
+    #[account(mut)]
+    pub admin: AccountInfo<'info>,
+
+    /// The user_info field stores the user's staking information account.
+    #[account(mut)]
+    pub user_info: Account<'info, UserInfo>,
+
+    /// The pool_info field stores the pool's account.
+    #[account(mut)]
+    pub pool_info: Account<'info, PoolInfo>,
+
+    /// The user_staking_wallet field stores the user's staking wallet account.
+    #[account(mut)]
+    pub user_staking_wallet: InterfaceAccount<'info, TokenAccount>,
+
+    /// The admin_staking_wallet field stores the admin's staking wallet account.
+    #[account(mut)]
+    pub admin_staking_wallet: InterfaceAccount<'info, TokenAccount>,
+
+    /// The staking_token field stores the staking token's account.
+    #[account(mut)]
+    pub staking_token: InterfaceAccount<'info, Mint>,
+
+    /// The token_program field stores the token program account.
+    pub token_program: Interface<'info, TokenInterface>,
 }
 
 /// This struct is used to store the pool's information.
