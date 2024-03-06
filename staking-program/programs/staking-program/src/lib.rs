@@ -45,6 +45,8 @@ pub mod staking_program {
             let cpi_program = ctx.accounts.token_program.to_account_info();
             let cpi_ctx = CpiContext::new(cpi_program, cpi_accounts);
             token::mint_to(cpi_ctx, user_info.reward_debt)?;
+            // Change the state of rewards in the user_info
+            user_info.reward_debt = 0;
         }
         let cpi_accounts = Transfer {
             from: ctx.accounts.user_staking_wallet.to_account_info(),
